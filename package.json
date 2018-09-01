@@ -1,0 +1,8 @@
+{
+  "name": "boardgamercon",
+  "version": "1.0.0",
+  "scripts": {
+    "postinstall": "npm install --prefix web && npm install --global brunch elm && cd web && brunch build --production && mv ../api/static .."
+  },
+  "cacheDirectories": ["web/node_modules"]
+}

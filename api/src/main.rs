@@ -2,16 +2,28 @@
 #![plugin(rocket_codegen)]
 
 extern crate rocket;
+extern crate rocket_contrib;
+extern crate rand;
+extern crate reqwest;
+extern crate xml;
 
+#[macro_use]
+extern crate serde_derive;
+extern crate serde_xml_rs;
+
+mod bgg;
+
+use rand::Rng;
 use std::path::{Path,PathBuf};
 use rocket::response::NamedFile;
-
+use rocket_contrib::{Json};
 
 // /api resolves to the API
 
 #[get("/")]
-fn api() -> &'static str {
-    "Hello, from the API!"
+fn api() -> Json<bgg::BoardGame> {
+    let random_num = rand::thread_rng().gen_range(1, bgg::BGG_NUM_GAMES);
+    Json(bgg::get_game(random_num))
 }
 
 // /assets resolves to the assets folder
